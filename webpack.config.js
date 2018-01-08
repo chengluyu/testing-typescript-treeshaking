@@ -1,6 +1,7 @@
 const {resolve} = require('path');
 // const nodeExternals = require('webpack-node-externals');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const rollupCommonjsPlugin = require('rollup-plugin-commonjs');
 
 module.exports = {
   target: 'node',
@@ -18,6 +19,18 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /entry.ts$/,
+        use: [{
+          loader: 'webpack-rollup-loader',
+          options: {
+            // OPTIONAL: any rollup options (except `entry`)
+            // e.g.
+            plugins: [rollupCommonjsPlugin()],
+            external: ['moment']
+          },
+        }]
+      },
+      {
         test: /\.ts$/,
         exclude: [/node_modules/, /builds/],
         use: {
@@ -30,14 +43,14 @@ module.exports = {
     ]
   },
   plugins: [
-    new UglifyJSPlugin({
-      uglifyOptions: {
-        output: {
-          comments: true,
-          beautify: true,
-          indent_level: 2,
-        }
-      }
-    }),
+    // new UglifyJSPlugin({
+    //   uglifyOptions: {
+    //     output: {
+    //       comments: true,
+    //       beautify: true,
+    //       indent_level: 2,
+    //     }
+    //   }
+    // }),
   ]
 };
