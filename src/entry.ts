@@ -1,4 +1,3 @@
-import {function1} from "./external1";
+import {Lambda} from "aws-sdk";
 
-
-console.log('using', function1);
+console.log('entry', Lambda);
