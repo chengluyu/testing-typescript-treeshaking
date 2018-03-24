@@ -1,6 +1,7 @@
 const {resolve} = require('path');
 // const nodeExternals = require('webpack-node-externals');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const webpack = require('webpack');
 
 module.exports = {
   target: 'node',
@@ -30,6 +31,7 @@ module.exports = {
     ]
   },
   plugins: [
+    new webpack.optimize.ModuleConcatenationPlugin(),
     new UglifyJSPlugin({
       uglifyOptions: {
         output: {
